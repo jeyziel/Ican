@@ -1,0 +1,13 @@
+{
+  "autoload":{
+      "psr-4":{
+        "App\\":"./App",
+        "JGFW\\":"./vendor/JGFW",
+        "core\\":"./core"
+      }
+  },
+  "require": {
+    "illuminate/database": "^5.4",
+    "twig/twig": "^2.3"
+  }
+}
