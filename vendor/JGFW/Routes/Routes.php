@@ -61,7 +61,7 @@ class Routes
 			}
 
 			$controller = new $class;
-			$controller->$method();
+			$controller->$method($this->request);
 			
 		}
 		else

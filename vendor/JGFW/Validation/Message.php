@@ -7,12 +7,16 @@ class Message
 {
     public function set($key,$message)
     {
-        if(!isset($_SESSION['flash']) || empty($_SESSION['flash']))
+        if(!isset($_SESSION['flash'][$key]) || empty($_SESSION['flash'][$key]))
         {
-            $_SESSION['flash'][$key] = [];
+             //$_SESSION['flash'][$key] = [];
+            $_SESSION['flash'][$key] = $message;
+            
         }
 
-        $_SESSION['flash'][$key] = $message;
+         //$_SESSION['flash'][$key] = $message;
+
+       
     }
 
     public function display($key)

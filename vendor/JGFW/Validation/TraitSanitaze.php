@@ -5,16 +5,23 @@ namespace JGFW\Validation;
 trait TraitSanitaze
 {
 
-	public function string($key)
+	private function string($key)
 	{
 		$string = filter_input(INPUT_POST,$key,FILTER_SANITIZE_STRING);
 
 		$this->input->$key = $string;
 	}
 
-	public function int($key)
+	public function checkbox($key)
 	{
-		$int = filter_input(INPUT_POST,$key,FILTER_SANITIZE_STRING);
+		$checkbox = $_POST[$key]; //mudar pra filter_input
+		$this->input->$key = $checkbox;
+		
+	}
+
+	private function int($key)
+	{
+		$int = filter_input(INPUT_POST,$key,FILTER_SANITIZE_NUMBER_INT);
 
 		$this->input->$key = $int;
 	}

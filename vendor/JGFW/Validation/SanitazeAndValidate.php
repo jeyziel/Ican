@@ -12,12 +12,27 @@ class SanitazeAndValidate
 	private $input;
 	private $message;
 
-	use TraitValidate,TraitSanitaze;
+	use TraitValidate,TraitSanitaze,TraitModelValidate;
 
 	public function __construct()
 	{
 		$this->input = new Input();
 		$this->message = new Message();
+	}
+
+	private function methodsValidate($key,$validation)
+	{
+		if($pos = strpos($validation,':'))
+		{
+			$model = substr($validation,$pos+1);
+			$Methodvalidation = strtok($validation,':');
+			
+			$this->$Methodvalidation($key,$model);
+		}
+		else
+		{
+			$this->$validation($key);
+		}
 	}
 
 	public function SanitazeAndValidate($key,$value)
@@ -36,7 +51,7 @@ class SanitazeAndValidate
 
 		foreach($explode as $validation)
 		{
-			$this->$validation($key);
+			$this->methodsValidate($key,$validation);
 		}
 
 		

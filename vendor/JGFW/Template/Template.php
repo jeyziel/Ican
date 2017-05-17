@@ -65,7 +65,7 @@ class Template
 
 	//colocar esses método em outro lugar depois..talves uma classe helper slá
 
-	public function error($key)
+	public function message($key)
 	{
 		return (new Message())->display($key);
 	}

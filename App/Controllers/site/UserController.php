@@ -37,10 +37,11 @@ class UserController extends Controller
     public function store()
     {
         $data = (new Validate())->sanitaze(function(){
+            $user = User::class;
            return [
-                'nome' =>'required|string',
+                'nome' =>"required|unique:{$user}|string",
                 'senha' => 'required|string',
-                'email' => 'required|email|unique:' . User::class;
+                'email' => 'required|email|unique:' . User::class
            ];
         });
 
