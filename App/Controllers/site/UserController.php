@@ -1,72 +1,122 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jeyziel
- * Date: 19/04/17
- * Time: 19:54
- */
 
 namespace App\Controllers\site;
-
 
 use App\Model\User;
 use JGFW\Controller\Controller;
 use JGFW\Http\Redirect;
-use JGFW\Template\Template;
+use JGFW\Login\Login;
+use JGFW\Login\Password;
+use JGFW\Session\Session;
 use JGFW\Validation\Validate;
 
 class UserController extends Controller
 {
     private $user;
+    private $password;
+    private $login;
 
-  
-
-    public function index()
+    public function __construct()
     {
-    	$master = "site/layout";
+        parent::__construct();
+        $this->password = new Password();
+        $this->login = new Login();
+        $this->user = new User();
+    }
 
-    	$data = [
-    		'nome' => 'jeyziel',
-    		'view' => 'Home'
-    	];
+    public function create()
+    {
+        $master = "site/layout";
 
-    	$this->view($data,$master);
+        $data = [
+            'nome' => 'jeyziel',
+            'view' => 'user_create',
+        ];
 
+        $this->view($data,$master);
     }
 
     public function store()
     {
         $data = (new Validate())->sanitaze(function(){
-            $user = User::class;
-           return [
-                'nome' =>"required|unique:{$user}|string",
+            return [
+                'nome' => 'required|string',
+                'email' => 'required|email|unique:' . User::class,
                 'senha' => 'required|string',
-                'email' => 'required|email|unique:' . User::class
-           ];
+            ];
         });
 
         if(empty($data))
         {
-           Redirect::to('/user');
+            return Redirect::to('/user/create');
         }
 
-        $user = new User;
-        $user->create((array) $data);
+        $data->senha = Password::hash($data->senha);
+        $data->role = 1;
+
+        try {
+            $user = $this->user->create((array)$data);
+            if($user->id)
+            {
+                return Redirect::to('/');
+            }
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
     }
 
-    public function show()
+    public function loginCreate()
     {
-        echo 'estou no método show';
+       $master = "site/layout";
+
+        $data = [
+            'nome' => 'jeyziel',
+            'view' => 'user_login',
+        ];
+
+        $this->view($data,$master);
     }
 
-    // public function __construct()
-    // {
-    //     $this->user = new User;
-    // }
+    public function login()
+    {
+        $data = (new Validate())->sanitaze(function(){
+            return [
+                'email' => 'required|email',
+                'senha' => 'required|string'
+            ];      
+        });
 
-    // public function get()
-    // {
-    //     return $this->user->all();
-    // }
+        if(empty($data))
+        {
+            return Redirect::to('/login');
+        }
 
+        $user = $this->user->where('email',$data->email)->first();
+
+        if($user->email)
+        {
+            if($this->login->verificarLogin($data->email,$data->senha,$user->email,$user->senha))
+            {
+                $dados = [
+                    'nome' => $user->nome,
+                    'role' => $user->role
+                ];
+                Session::set('user',$dados);
+
+                return Redirect::to('/');
+            }
+            else
+            {
+                return Redirect::to('/');
+            }
+        }
+    }
+
+    public function logout()
+    {
+       if($this->login->logout())
+       {
+            return Redirect::to('/');
+       }
+    }
 }

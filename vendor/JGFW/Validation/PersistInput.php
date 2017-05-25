@@ -24,7 +24,6 @@ class PersistInput
         {
             $input = $_SESSION['input'][$value];
         }
-
         $this->removeInput($value);
         return isset($input) ? $input : '';
     }

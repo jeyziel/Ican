@@ -1,6 +1,7 @@
 <nav class="navbar navbar-default">
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
+
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                 <span class="sr-only">Toggle navigation</span>
@@ -24,7 +25,7 @@
               
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                           <i class="glyphicon glyphicon-user">Jeyziel</i> <span class="caret"></span>
+                           <i class="glyphicon glyphicon-user">@nome</i> <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="/logout"><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>

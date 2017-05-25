@@ -9,7 +9,7 @@
 
     <div class="form-group">
         <label for="">Content</label>
-        <textarea name="content" class="form-control"></textarea>
+        <textarea name="content" class="form-control"><?php echo $this->getInput('content') ?></textarea>
         <?php echo $this->message('content'); ?>
     </div>
 

@@ -1,4 +1,5 @@
 <div class="container">
+
     <h1 class="h1">
        @title
         <a href="/post/create" class="btn btn-primary pull-right">

@@ -3,7 +3,13 @@
 
     <div class="form-group">
         <label for="">Titulo</label>
-        <input type="text" class="form-control" name="title" placeholder="title" value="<?php echo $post->title ?>">
+        <input type="text" class="form-control" name="title" placeholder="title" value="<?php if($input = $this->getInput('title'))
+            {
+                echo $input;
+            }else{
+                echo $post->title;
+            }
+            ?>">
         <?php echo $this->message('title'); ?>
     </div>
 

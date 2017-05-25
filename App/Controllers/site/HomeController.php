@@ -3,6 +3,7 @@
 namespace App\Controllers\site;
 
 use JGFW\Controller\Controller;
+use JGFW\Session\Session;
 
 class HomeController extends Controller
 {
@@ -10,9 +11,12 @@ class HomeController extends Controller
 	{
 		$master = "site/layout";
 
+		
+
     	$data = [
     		'nome' => 'jeyziel',
-    		'view' => 'index'
+    		'view' => 'index',
+    		'nome' => Session::get('user')['nome'] ?? ''
     	];
 
     	$this->view($data,$master);
