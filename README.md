@@ -1,3 +1,3 @@
 # Ican
 
-compilação bagunçada de tudo que aprendo,é tudo misturado kkkkk
+Framework pessoal desenvolvido para enteder os conceitos principais do php moderno
